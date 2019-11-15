@@ -40,7 +40,7 @@
         
 # 二、准备数据
 我~~陈悦~~用最笨的方法，花了一些时间，手写了一批png格式的数字图片：
-![title](/api/file/getImage?fileId=5dce27a60a6b721fc900003f)
+![title](a.png)
 
 ps:此处感谢**陈悦**同学的辛苦付出.
 
@@ -141,4 +141,4 @@ ps:此处感谢**陈悦**同学的辛苦付出.
         print("正确率为{}".format(count / len(testfiles)))
         print()
 
-![title](/train_and_val.png)
+![title](train_and_val.png)
