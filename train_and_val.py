@@ -30,7 +30,7 @@ def img2Model(originDataPath, modelpath):
         for i in s_list:
 
             filepath=originDataPath + child + '/' + i
-            print(filepath)
+            # print(filepath)
             img = cv2.imdecode(np.fromfile(filepath, dtype=np.uint8),0)
             img = cv2.resize(img, (32, 32))
             img = np.asarray(img)
@@ -116,9 +116,10 @@ originalData = 'Data/originData/'
 
 def main(method):
     if method == "train":
-        shutil.rmtree(trainPath)
-        shutil.rmtree(testPath)
-        shutil.rmtree(modelPath)
+        if  os.path.exists(trainPath):
+            shutil.rmtree(trainPath)
+            shutil.rmtree(testPath)
+            shutil.rmtree(modelPath)
 
         os.mkdir(testPath)
         os.mkdir(trainPath)
@@ -126,11 +127,34 @@ def main(method):
 
         img2Model(originalData, modelPath)
         shutildata(modelPath, trainPath, testPath)
-        validate(testPath, trainPath, 4)
+        validate(testPath, trainPath, 2)
 
     if method == 'pridict':
-        validate(testPath, trainPath, 5)
+        validate(testPath, trainPath, 2)
+
+
+
+def pridictCustomImg(imgPath,k):
+    img = cv2.imread(imgPath, 0)
+    img = cv2.resize(img, (32, 32))
+    img = np.asarray(img)
+    img[img > 127] = 255
+    img[img <= 127] = 1
+    img[img == 255] = 0
+    dstFileName = imgPath.split('.')[0]+'.txt'
+    np.savetxt(dstFileName, img, fmt='%d', delimiter=' ')
+
+    testarr=load_data(dstFileName)
+    trainarr, labels = makeTrainData("Data/train/")
+
+    with open('num_char.json', 'r') as f:
+        dict = json.loads(f.read())
+
+    result = knn(k, testarr, trainarr, labels)
+    result = dict[str(result)]
+    print("预测的结果为:"+result)
 
 
 if __name__ == '__main__':
     main('train')
+    #pridictCustomImg('test.jpg',2)
