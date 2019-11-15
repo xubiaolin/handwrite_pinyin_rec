@@ -141,4 +141,4 @@ ps:此处感谢**陈悦**同学的辛苦付出.
         print("正确率为{}".format(count / len(testfiles)))
         print()
 
-![title](http:note.markxu.vip/api/file/getImage?fileId=5dce29a40a6b721fc9000040)
+![title](/train_and_val.png)
